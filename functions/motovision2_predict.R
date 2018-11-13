@@ -2,7 +2,7 @@
 # MotoVision 2.0 classifier
 # Version: 1.1
 # Author: Payam Mokhtarian
-# Update: 2018-11-08
+# Update: 2018-11-14
 # Note: 
 ## =========================================================
 

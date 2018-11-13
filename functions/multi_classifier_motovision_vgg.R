@@ -29,11 +29,11 @@ batch_size_input <- 20
 # RGB = 3 channels
 channels <- 3
 # epochs
-epochs <- 35 # 25
+epochs <- 35
 # Steps per epoch
-steps_per_epoch_input <- 150 # 100
+steps_per_epoch_input <- 150
 # Validation steps
-validation_steps_input <- 150 # 100
+validation_steps_input <- 150
 # Optimizer error
 optimizer_error <- 2e-5
 
@@ -138,24 +138,34 @@ sessionInfo()
 
 ## Fine tuning
 # Unfreez weights
-# unfreeze_weights(full_conv_base, from = "block3_conv1")
-# 
-# # re-train
-# motovision_model %>% compile(
-#   loss = "categorical_crossentropy",
-#   optimizer = optimizer_rmsprop(lr = optimizer_error),
-#   metrics = c("accuracy")
-# )
-# 
-# motovision_history <- motovision_model %>% fit_generator(
-#   train_generator,
-#   steps_per_epoch = steps_per_epoch_input,
-#   epochs = epochs,
-#   validation_data = validation_generator,
-#   validation_steps = validation_steps_input
-# )
+unfreeze_weights(full_conv_base, from = "block3_conv1")
 
-## Unit testing
+motovision_model %>% compile(
+  loss = "categorical_crossentropy",
+  optimizer = optimizer_rmsprop(lr = optimizer_error),
+  metrics = c("accuracy")
+)
+
+motovision_history <- motovision_model %>% fit_generator(
+  train_generator,
+  steps_per_epoch = steps_per_epoch_input,
+  epochs = epochs,
+  validation_data = validation_generator,
+  validation_steps = validation_steps_input
+)
+save_model_hdf5(object = motovision_model, 
+                filepath = paste0("~/MotoMe Projects/Keras_CNN/saved_model/",full_conv_base_name,"_freezed.h5"), 
+                overwrite = TRUE,
+                include_optimizer = TRUE)
+
+## Training results
+jpeg(paste0("~/MotoMe Projects/VRUM_MotoVision_CNN/plot/motovision_history_freezed_",gsub("-","",Sys.Date()),".jpg"), 
+     width = 800, 
+     height = 500)
+plot(motovision_history)
+dev.off()
+
+##--------------- Unit testing
 # Load motovision model
 motovision_model <- load_model_hdf5(filepath = paste0("~/MotoMe Projects/Keras_CNN/saved_model/",full_conv_base_name,".h5"),
                          custom_objects = NULL,
