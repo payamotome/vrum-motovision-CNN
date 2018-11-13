@@ -1,0 +1,4 @@
+database_userid = "vrum"
+database_password = "Blast2market!"
+nonprod_auth = "Basic dnJ1bS1zZXJ2aWNlczpoZnhBZnJqdGtpSG1EYk1MNjNKZA=="
+prod_auth = "Basic dnJ1bS1zZXJ2aWNlczpQS0t3TmtzZ2JKemZLaUFBS3FaOGVhYXV0YjdIRUFGN2J3VW9qNkhzb2VUcDN1am9tenRwMmpLajJEODhLR0Ez"
